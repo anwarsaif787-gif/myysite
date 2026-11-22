@@ -22,23 +22,3 @@ services:
         value: "False"
       - key: ALLOWED_HOSTS
         value: ".onrender.com"
-      - key: CSRF_TRUSTED_ORIGINS
-        value: "https://myysite.onrender.com"
-      - key: EMAIL_HOST_USER
-        sync: false
-      - key: EMAIL_HOST_PASSWORD
-        sync: false
-      - key: DEFAULT_FROM_EMAIL
-        sync: false
-      - key: AWS_ACCESS_KEY_ID
-        sync: false
-      - key: AWS_SECRET_ACCESS_KEY
-        sync: false
-      - key: AWS_STORAGE_BUCKET_NAME
-        sync: false
-      - key: AWS_S3_ENDPOINT_URL
-        sync: false
-      - key: AWS_S3_REGION_NAME
-        value: "auto"
-      - key: AWS_S3_CUSTOM_DOMAIN
-        sync: false
