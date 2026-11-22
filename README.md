@@ -47,11 +47,9 @@ Without `AWS_STORAGE_BUCKET_NAME`, uploaded media is written to local `media/`.
    - Build command: `bash build.sh`
    - Start command: `gunicorn myysite.wsgi:application`
 4. Add the environment variables above; set `DATABASE_URL` from the database.
-5. After the first deploy, open the Render shell:
-   ```bash
-   python manage.py createsuperuser
-   python manage.py seed_demo   # optional
-   ```
+5. The build script seeds demo content on the first deploy and creates an admin
+   account automatically. The login is `admin`; the generated password is shown
+   under the service's **Environment** tab as `DJANGO_SUPERUSER_PASSWORD`.
 
 `render.yaml` can provision the web service and database automatically.
 
