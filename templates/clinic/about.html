@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Dr. Osama Sami — {{ site.clinic_name }}{% endblock %}
+
+{% block content %}
+{% include 'includes/page_header.html' with eyebrow="About" title="Meet Dr. Osama Sami" subtitle="A consultant physiotherapist with over a decade of experience helping people move, recover, and live without limits." %}
+
+<section class="section section--cream">
+    <div class="container split">
+        <div class="split__media" data-reveal>
+            {% if doctor.photo %}
+            <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" loading="lazy">
+            {% else %}
+            <img src="{% static 'img/doctor.jpg' %}" alt="Dr. Osama Sami, Consultant Physiotherapist" loading="lazy">
+            {% endif %}
+            <div class="split__badge">
+                <strong>{{ doctor.years_experience }}+</strong>
+                <span>Years helping<br>patients recover</span>
+            </div>
+        </div>
+        <div class="split__body" data-reveal data-delay="1">
+            <p class="eyebrow">{{ doctor.title }}</p>
+            <h2>Expertise built on care, science, and results</h2>
+            {% if doctor.bio %}
+            <p>{{ doctor.bio|linebreaksbr }}</p>
+            {% else %}
+            <p>Dr. Osama Sami is a consultant physiotherapist whose practice is built on a simple belief: every patient deserves a plan designed around their body, their goals, and their life. Over more than ten years, he has guided thousands of patients through injury, surgery, and chronic pain.</p>
+            <p>His approach blends evidence-based manual therapy with progressive exercise, education, and genuine partnership — so recovery doesn't just happen in the clinic, it lasts.</p>
+            {% endif %}
+            <div class="split__columns">
+                <div>
+                    <h3 class="mini-title">Credentials</h3>
+                    <ul class="check-list check-list--compact">
+                        {% for item in doctor.credential_list %}
+                        <li><span class="check-list__icon">✓</span>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="mini-title">Specialties</h3>
+                    <ul class="check-list check-list--compact">
+                        {% for item in doctor.specialty_list %}
+                        <li><span class="check-list__icon">✓</span>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="split__actions">
+                <a class="btn btn--navy" href="{% url 'clinic:book' %}">Book a consultation</a>
+                <a class="link-arrow" href="{% url 'clinic:services' %}">Explore services
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section--white">
+    <div class="container">
+        <div class="section-head">
+            <div>
+                <p class="eyebrow">The journey</p>
+                <h2>A career devoted to movement</h2>
+            </div>
+        </div>
+        <ol class="timeline">
+            <li class="timeline__item" data-reveal>
+                <span class="timeline__year">2013</span>
+                <div class="timeline__content">
+                    <h3>Clinical foundations</h3>
+                    <p>Graduated in Physical Therapy and began clinical practice across orthopaedic and rehabilitation settings.</p>
+                </div>
+            </li>
+            <li class="timeline__item" data-reveal data-delay="1">
+                <span class="timeline__year">2016</span>
+                <div class="timeline__content">
+                    <h3>Specialisation in manual therapy</h3>
+                    <p>Completed advanced certification in orthopaedic manual therapy, refining hands-on treatment for complex cases.</p>
+                </div>
+            </li>
+            <li class="timeline__item" data-reveal data-delay="2">
+                <span class="timeline__year">2019</span>
+                <div class="timeline__content">
+                    <h3>Sports & surgical rehabilitation</h3>
+                    <p>Expanded practice into sports injury recovery and post-operative rehabilitation for athletes and active adults.</p>
+                </div>
+            </li>
+            <li class="timeline__item" data-reveal data-delay="3">
+                <span class="timeline__year">Today</span>
+                <div class="timeline__content">
+                    <h3>Consultant physiotherapist</h3>
+                    <p>Leading a personalised, evidence-based practice trusted by thousands of patients for lasting recovery.</p>
+                </div>
+            </li>
+        </ol>
+    </div>
+</section>
+
+<section class="section section--navy values">
+    <div class="container">
+        <div class="section-head section-head--light">
+            <div>
+                <p class="eyebrow eyebrow--gold">The philosophy</p>
+                <h2>What guides every session</h2>
+            </div>
+        </div>
+        <div class="value-grid">
+            <div class="value-card" data-reveal>
+                <span class="value-card__num">01</span>
+                <h3>Evidence-based</h3>
+                <p>Every technique is grounded in current research and measured against your progress.</p>
+            </div>
+            <div class="value-card" data-reveal data-delay="1">
+                <span class="value-card__num">02</span>
+                <h3>Truly personal</h3>
+                <p>No cookie-cutter plans. Your treatment is shaped around your body, goals, and lifestyle.</p>
+            </div>
+            <div class="value-card" data-reveal data-delay="2">
+                <span class="value-card__num">03</span>
+                <h3>Hands-on care</h3>
+                <p>Skilled manual therapy combined with education, so you understand and own your recovery.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section--white">
+    <div class="container">
+        <div class="section-head">
+            <div>
+                <p class="eyebrow">Patient stories</p>
+                <h2>Trusted by people like you</h2>
+            </div>
+            <a class="link-arrow" href="{% url 'clinic:testimonials' %}">All testimonials
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+        </div>
+        <div class="testimonial-grid testimonial-grid--three">
+            {% for testimonial in testimonials %}
+            <article class="testimonial-card" data-reveal data-delay="{{ forloop.counter0 }}">
+                <span class="stars">
+                    {% for star in "12345"|make_list %}{% if forloop.counter <= testimonial.rating %}★{% else %}☆{% endif %}{% endfor %}
+                </span>
+                <blockquote>“{{ testimonial.quote }}”</blockquote>
+                <div class="testimonial-card__person">
+                    <span class="avatar">{{ testimonial.patient_name|first }}</span>
+                    <div><strong>{{ testimonial.patient_name }}</strong><span>{{ testimonial.service.name|default:"Physiotherapy patient" }}</span></div>
+                </div>
+            </article>
+            {% empty %}
+            <article class="testimonial-card">
+                <span class="stars">★★★★★</span>
+                <blockquote>“Dr. Osama explained everything clearly and gave me the confidence to move again.”</blockquote>
+                <div class="testimonial-card__person">
+                    <span class="avatar">A</span>
+                    <div><strong>Ahmed R.</strong><span>Sports injury</span></div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="cta-band">
+    <div class="container cta-band__inner" data-reveal>
+        <div class="cta-band__copy">
+            <p class="eyebrow eyebrow--gold">Let's work together</p>
+            <h2>Start with a personalised assessment</h2>
+            <p>We'll listen, assess, and build a plan that fits your life.</p>
+        </div>
+        <div class="cta-band__actions">
+            <a class="btn btn--gold" href="{% url 'clinic:book' %}">Book Appointment</a>
+            <a class="btn btn--outline-light" href="tel:{{ site.phone }}">{{ site.phone }}</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

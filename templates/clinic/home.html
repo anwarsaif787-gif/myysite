@@ -1,0 +1,347 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ site.clinic_name }} — Expert Physiotherapy in {{ site.address }}{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero__glow" aria-hidden="true"></div>
+    <div class="hero__grid-lines" aria-hidden="true"></div>
+    <div class="container hero__inner">
+        <div class="hero__copy">
+            <p class="eyebrow eyebrow--gold" data-reveal>Consultant Physiotherapy · {{ site.years_experience }}+ Years</p>
+            <h1 data-reveal data-delay="1">{{ site.hero_heading }}</h1>
+            <p class="hero__sub" data-reveal data-delay="2">{{ site.hero_subheading }}</p>
+            <div class="hero__actions" data-reveal data-delay="3">
+                <a class="btn btn--gold" href="{% url 'clinic:book' %}">
+                    Book Your Assessment
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+                <a class="btn btn--ghost" href="{% url 'clinic:services' %}">Explore Services</a>
+            </div>
+            <div class="hero__trust" data-reveal data-delay="4">
+                <div class="hero__rating">
+                    <span class="stars" aria-label="Rated 4.9 out of 5">★★★★★</span>
+                    <span>4.9/5 from happy patients</span>
+                </div>
+                <span class="hero__divider" aria-hidden="true"></span>
+                <div class="hero__patients"><strong>{{ site.patients_treated }}+</strong> patients treated</div>
+            </div>
+        </div>
+
+        <div class="hero__visual" data-reveal data-delay="2">
+            <div class="hero__frame">
+                <img src="{% static 'img/hero.jpg' %}" alt="Dr. Osama Sami guiding a patient through a physiotherapy session" width="640" height="760" fetchpriority="high">
+                <div class="hero__frame-shine" aria-hidden="true"></div>
+            </div>
+            <div class="hero__badge">
+                <strong>{{ site.years_experience }}+</strong>
+                <span>Years of<br>experience</span>
+            </div>
+            <div class="hero__card">
+                <span class="hero__card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg>
+                </span>
+                <div><strong>{{ site.success_rate }}%</strong><span>Recovery success rate</span></div>
+            </div>
+        </div>
+    </div>
+    <a class="hero__scroll" href="#intro" aria-label="Scroll to content"><span></span></a>
+</section>
+
+<div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+        {% for i in "12" %}
+        <span>Manual Therapy</span><span class="marquee__dot"></span>
+        <span>Sports Rehabilitation</span><span class="marquee__dot"></span>
+        <span>Post-Surgical Recovery</span><span class="marquee__dot"></span>
+        <span>Chronic Pain Relief</span><span class="marquee__dot"></span>
+        <span>Posture Correction</span><span class="marquee__dot"></span>
+        {% endfor %}
+    </div>
+</div>
+
+<section class="section section--cream stats">
+    <div class="container stats__grid">
+        <div class="stat" data-reveal>
+            <span class="stat__num" data-counter="{{ site.years_experience }}">0</span>
+            <span class="stat__label">Years of clinical experience</span>
+        </div>
+        <div class="stat" data-reveal data-delay="1">
+            <span class="stat__num" data-counter="{{ site.patients_treated }}">0</span>
+            <span class="stat__label">Patients helped to recover</span>
+        </div>
+        <div class="stat" data-reveal data-delay="2">
+            <span class="stat__num" data-counter="{{ site.success_rate }}" data-suffix="%">0</span>
+            <span class="stat__label">Reported recovery success</span>
+        </div>
+        <div class="stat" data-reveal data-delay="3">
+            <span class="stat__num" data-counter="{{ services|length }}">0</span>
+            <span class="stat__label">Specialised treatment programmes</span>
+        </div>
+    </div>
+</section>
+
+<section class="section section--white" id="intro">
+    <div class="container split">
+        <div class="split__media" data-reveal>
+            <img src="{% static 'img/about.jpg' %}" alt="Physiotherapist assessing a patient's mobility" loading="lazy" width="620" height="720">
+            <div class="split__quote">
+                <span class="split__quote-mark">“</span>
+                <p>Movement is medicine. My job is to help you reclaim it — safely and for good.</p>
+                <span class="split__quote-author">— Dr. Osama Sami</span>
+            </div>
+        </div>
+        <div class="split__body" data-reveal data-delay="1">
+            <p class="eyebrow">Meet your physiotherapist</p>
+            <h2>A decade of hands-on expertise, tailored to your body</h2>
+            <p>{{ doctor.bio|default:site.about_short }}</p>
+            <ul class="check-list">
+                {% for item in doctor.specialty_list %}
+                <li><span class="check-list__icon">✓</span>{{ item }}</li>
+                {% endfor %}
+            </ul>
+            <div class="split__signature">
+                <span class="split__signature-name">Dr. Osama Sami</span>
+                <span class="split__signature-role">{{ doctor.title }}</span>
+            </div>
+            <a class="btn btn--navy" href="{% url 'clinic:about' %}">More about Dr. Osama</a>
+        </div>
+    </div>
+</section>
+
+<section class="section section--cream">
+    <div class="container">
+        <div class="section-head">
+            <div>
+                <p class="eyebrow">What we treat</p>
+                <h2>Specialised care for every stage of recovery</h2>
+            </div>
+            <a class="link-arrow" href="{% url 'clinic:services' %}">View all services
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+        </div>
+        <div class="service-grid">
+            {% for service in services %}
+            <a class="service-card" href="{{ service.get_absolute_url }}" data-reveal data-delay="{{ forloop.counter0 }}">
+                <span class="service-card__icon">{% include 'includes/service_icon.html' with icon=service.icon %}</span>
+                <h3>{{ service.name }}</h3>
+                <p>{{ service.short_description }}</p>
+                <span class="service-card__meta">
+                    <span>{{ service.duration_minutes }} min session</span>
+                    <span class="service-card__more">Learn more →</span>
+                </span>
+            </a>
+            {% empty %}
+            <p class="empty-note">Our services are being updated. Please check back soon.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section section--navy process">
+    <div class="container">
+        <div class="section-head section-head--light">
+            <div>
+                <p class="eyebrow eyebrow--gold">The approach</p>
+                <h2>A clear path from pain to performance</h2>
+            </div>
+        </div>
+        <div class="process__grid">
+            <div class="process__step" data-reveal>
+                <span class="process__num">01</span>
+                <h3>Assess</h3>
+                <p>A thorough movement and history assessment pinpoints the true cause — not just the symptoms.</p>
+            </div>
+            <div class="process__step" data-reveal data-delay="1">
+                <span class="process__num">02</span>
+                <h3>Treat</h3>
+                <p>Hands-on therapy and targeted exercise, tailored to your goals and comfort.</p>
+            </div>
+            <div class="process__step" data-reveal data-delay="2">
+                <span class="process__num">03</span>
+                <h3>Strengthen</h3>
+                <p>Progressive rehabilitation builds resilience so the problem doesn't return.</p>
+            </div>
+            <div class="process__step" data-reveal data-delay="3">
+                <span class="process__num">04</span>
+                <h3>Thrive</h3>
+                <p>Return to sport, work, and daily life with confidence and lasting mobility.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section--white">
+    <div class="container">
+        <div class="section-head">
+            <div>
+                <p class="eyebrow">Patient stories</p>
+                <h2>Real people. Real recoveries.</h2>
+            </div>
+            <div class="slider__controls" data-slider-controls>
+                <button type="button" class="slider__btn" data-slider-prev aria-label="Previous testimonial">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <button type="button" class="slider__btn" data-slider-next aria-label="Next testimonial">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="slider" data-slider>
+            <div class="slider__track" data-slider-track>
+                {% for testimonial in testimonials %}
+                <article class="testimonial-card">
+                    <span class="stars" aria-label="{{ testimonial.rating }} out of 5 stars">
+                        {% for star in "12345"|make_list %}{% if forloop.counter <= testimonial.rating %}★{% else %}☆{% endif %}{% endfor %}
+                    </span>
+                    <blockquote>“{{ testimonial.quote }}”</blockquote>
+                    <div class="testimonial-card__person">
+                        <span class="avatar">{{ testimonial.patient_name|first }}</span>
+                        <div>
+                            <strong>{{ testimonial.patient_name }}</strong>
+                            <span>{{ testimonial.service.name|default:"Physiotherapy patient" }}</span>
+                        </div>
+                    </div>
+                </article>
+                {% empty %}
+                <article class="testimonial-card">
+                    <span class="stars">★★★★★</span>
+                    <blockquote>“After years of lower back pain, I finally feel like myself again. Dr. Osama took the time to understand my goals.”</blockquote>
+                    <div class="testimonial-card__person">
+                        <span class="avatar">S</span>
+                        <div><strong>Sarah M.</strong><span>Chronic back pain</span></div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="section-foot">
+            <a class="link-arrow" href="{% url 'clinic:testimonials' %}">Read more stories
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="section section--cream">
+    <div class="container">
+        <div class="section-head">
+            <div>
+                <p class="eyebrow">Inside the clinic</p>
+                <h2>A calm, modern space built for healing</h2>
+            </div>
+            <a class="link-arrow" href="{% url 'clinic:gallery' %}">View gallery
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+        </div>
+        <div class="gallery-grid gallery-grid--teaser">
+            {% for image in gallery %}
+            <a class="gallery-item" href="{{ image.image.url }}" data-lightbox data-caption="{{ image.title }}" data-reveal data-delay="{{ forloop.counter0 }}">
+                <img src="{{ image.image.url }}" alt="{{ image.title|default:'Clinic gallery image' }}" loading="lazy">
+                <span class="gallery-item__overlay"><span>{{ image.title|default:"View" }}</span></span>
+            </a>
+            {% empty %}
+            {% for n in "123456" %}
+            <a class="gallery-item" href="{% static 'img/gallery-' %}{{ n }}.jpg" data-lightbox data-caption="{{ site.clinic_name }} clinic" data-reveal data-delay="{{ forloop.counter0 }}">
+                <img src="{% static 'img/gallery-' %}{{ n }}.jpg" alt="{{ site.clinic_name }} clinic" loading="lazy">
+                <span class="gallery-item__overlay"><span>View</span></span>
+            </a>
+            {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section section--white">
+    <div class="container">
+        <div class="section-head">
+            <div>
+                <p class="eyebrow">From the journal</p>
+                <h2>Insights for a stronger, pain-free life</h2>
+            </div>
+            <a class="link-arrow" href="{% url 'clinic:blog' %}">All articles
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+        </div>
+        <div class="post-grid">
+            {% for post in posts %}
+            <article class="post-card" data-reveal data-delay="{{ forloop.counter0 }}">
+                <a class="post-card__media" href="{{ post.get_absolute_url }}">
+                    {% if post.cover_image %}
+                    <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" loading="lazy">
+                    {% else %}
+                    <img src="{% static 'img/blog-' %}{% cycle '1' '2' '3' '4' %}.jpg" alt="{{ post.title }}" loading="lazy">
+                    {% endif %}
+                </a>
+                <div class="post-card__body">
+                    <span class="post-card__date">{{ post.published_at|date:"M j, Y" }}</span>
+                    <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                    <p>{{ post.excerpt|default:post.content|truncatewords:18 }}</p>
+                    <a class="link-arrow link-arrow--sm" href="{{ post.get_absolute_url }}">Read article
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </a>
+                </div>
+            </article>
+            {% empty %}
+            <p class="empty-note">Articles are on their way. Check back soon.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section section--cream">
+    <div class="container faq-split">
+        <div class="faq-split__intro" data-reveal>
+            <p class="eyebrow">Common questions</p>
+            <h2>Everything you need to know before your first visit</h2>
+            <p>Still unsure? We're happy to help you decide whether physiotherapy is right for you.</p>
+            <div class="faq-split__card">
+                <span class="faq-split__card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.9 2.2Z"/></svg>
+                </span>
+                <div>
+                    <span>Prefer to talk first?</span>
+                    <a href="tel:{{ site.phone }}">{{ site.phone }}</a>
+                </div>
+            </div>
+            <a class="link-arrow" href="{% url 'clinic:faq' %}">See all FAQs
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+        </div>
+        <div class="accordion" data-accordion data-reveal data-delay="1">
+            {% for faq in faqs %}
+            <div class="accordion__item">
+                <button type="button" class="accordion__trigger" aria-expanded="false">
+                    <span>{{ faq.question }}</span>
+                    <span class="accordion__icon" aria-hidden="true"></span>
+                </button>
+                <div class="accordion__panel"><p>{{ faq.answer }}</p></div>
+            </div>
+            {% empty %}
+            <div class="accordion__item">
+                <button type="button" class="accordion__trigger" aria-expanded="false">
+                    <span>Do I need a referral to book?</span>
+                    <span class="accordion__icon" aria-hidden="true"></span>
+                </button>
+                <div class="accordion__panel"><p>No referral is needed. You can book directly online and we'll assess your needs on your first visit.</p></div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="cta-band">
+    <div class="container cta-band__inner" data-reveal>
+        <div class="cta-band__copy">
+            <p class="eyebrow eyebrow--gold">Your recovery starts here</p>
+            <h2>Ready to move without pain?</h2>
+            <p>Book a one-to-one assessment and leave with a clear, personalised plan.</p>
+        </div>
+        <div class="cta-band__actions">
+            <a class="btn btn--gold" href="{% url 'clinic:book' %}">Book Appointment</a>
+            <a class="btn btn--outline-light" href="tel:{{ site.phone }}">{{ site.phone }}</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

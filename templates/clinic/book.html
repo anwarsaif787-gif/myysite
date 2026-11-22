@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Book an Appointment — {{ site.clinic_name }}{% endblock %}
+
+{% block content %}
+{% include 'includes/page_header.html' with eyebrow="Booking" title="Book your appointment" subtitle="Choose a service, pick a time that works for you, and we'll take care of the rest." %}
+
+<section class="section section--cream">
+    <div class="container booking-layout">
+        <div class="booking-card" data-reveal>
+            <form method="post" class="form booking-form" id="bookingForm" data-slots-url="{% url 'clinic:api_slots' %}" novalidate>
+                {% csrf_token %}
+                {{ form.website }}
+
+                {% if form.non_field_errors %}
+                <div class="form__alert">{{ form.non_field_errors.0 }}</div>
+                {% endif %}
+
+                <div class="booking-step">
+                    <span class="booking-step__num">1</span>
+                    <div class="booking-step__body">
+                        <h3>Choose your service</h3>
+                        <p class="booking-step__hint">Not sure? Pick "General Assessment" or call us.</p>
+                        {% include 'includes/form_field.html' with field=form.service %}
+                    </div>
+                </div>
+
+                <div class="booking-step">
+                    <span class="booking-step__num">2</span>
+                    <div class="booking-step__body">
+                        <h3>Pick a date &amp; time</h3>
+                        {% include 'includes/form_field.html' with field=form.date %}
+                        <div class="slot-picker">
+                            <p class="slot-picker__label">Available times</p>
+                            <div class="slot-grid" id="slotGrid" aria-live="polite">
+                                <p class="slot-hint">Choose a date above to see available times.</p>
+                            </div>
+                            {{ form.time }}
+                            {% if form.time.errors %}<span class="field__error">{{ form.time.errors.0 }}</span>{% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="booking-step">
+                    <span class="booking-step__num">3</span>
+                    <div class="booking-step__body">
+                        <h3>Your details</h3>
+                        <div class="form__row">
+                            {% include 'includes/form_field.html' with field=form.name %}
+                            {% include 'includes/form_field.html' with field=form.email %}
+                        </div>
+                        {% include 'includes/form_field.html' with field=form.phone %}
+                        {% include 'includes/form_field.html' with field=form.message %}
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn--gold btn--block btn--lg">Request Appointment</button>
+                <p class="form__note">We'll confirm your appointment by phone or email within one working day.</p>
+            </form>
+        </div>
+
+        <aside class="booking-side" data-reveal data-delay="1">
+            <div class="booking-side__card">
+                <h3>What to expect</h3>
+                <ul class="check-list check-list--compact">
+                    <li><span class="check-list__icon">✓</span>Wear comfortable, loose clothing</li>
+                    <li><span class="check-list__icon">✓</span>Bring any scans or reports you have</li>
+                    <li><span class="check-list__icon">✓</span>Arrive 10 minutes early</li>
+                    <li><span class="check-list__icon">✓</span>Your first visit includes assessment</li>
+                </ul>
+            </div>
+            <div class="booking-side__card booking-side__card--navy">
+                <h3>Need help booking?</h3>
+                <p>Call or message us and we'll find a time that suits you.</p>
+                <a class="btn btn--gold btn--block" href="tel:{{ site.phone }}">{{ site.phone }}</a>
+                {% if site.whatsapp %}
+                <a class="link-arrow link-arrow--light" href="https://wa.me/{{ site.whatsapp }}" target="_blank" rel="noopener">Chat on WhatsApp
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+                {% endif %}
+            </div>
+            <div class="booking-side__hours">
+                <h4>Opening hours</h4>
+                <p>{{ site.working_hours }}</p>
+                <p>Friday: Closed</p>
+            </div>
+        </aside>
+    </div>
+</section>
+{% endblock %}

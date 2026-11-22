@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Physiotherapy Services — {{ site.clinic_name }}{% endblock %}
+
+{% block content %}
+{% include 'includes/page_header.html' with eyebrow="Services" title="Physiotherapy, tailored to you" subtitle="From acute injury to long-term performance, each programme is built around your assessment, your goals, and your pace." %}
+
+<section class="section section--cream">
+    <div class="container">
+        <div class="service-grid service-grid--full">
+            {% for service in services %}
+            <a class="service-card" href="{{ service.get_absolute_url }}" data-reveal data-delay="{{ forloop.counter0 }}">
+                <span class="service-card__icon">{% include 'includes/service_icon.html' with icon=service.icon %}</span>
+                <h3>{{ service.name }}</h3>
+                <p>{{ service.short_description }}</p>
+                <span class="service-card__meta">
+                    <span>{{ service.duration_minutes }} min session</span>
+                    <span class="service-card__more">Learn more →</span>
+                </span>
+            </a>
+            {% empty %}
+            <p class="empty-note">Services are being updated. Please contact us to learn more.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section section--white">
+    <div class="container">
+        <div class="section-head">
+            <div>
+                <p class="eyebrow">How it works</p>
+                <h2>Simple, supportive, and built around you</h2>
+            </div>
+        </div>
+        <div class="process__grid process__grid--light">
+            <div class="process__step" data-reveal>
+                <span class="process__num">01</span>
+                <h3>Book online</h3>
+                <p>Choose a service, date, and time that suits you — confirmation is quick and easy.</p>
+            </div>
+            <div class="process__step" data-reveal data-delay="1">
+                <span class="process__num">02</span>
+                <h3>Assessment</h3>
+                <p>We discuss your history and assess movement to find the root cause of your pain.</p>
+            </div>
+            <div class="process__step" data-reveal data-delay="2">
+                <span class="process__num">03</span>
+                <h3>Treatment</h3>
+                <p>Hands-on therapy and targeted exercise begin in your very first session.</p>
+            </div>
+            <div class="process__step" data-reveal data-delay="3">
+                <span class="process__num">04</span>
+                <h3>Progress</h3>
+                <p>We track your recovery and adapt your plan so you keep moving forward.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-band">
+    <div class="container cta-band__inner" data-reveal>
+        <div class="cta-band__copy">
+            <p class="eyebrow eyebrow--gold">Not sure which service?</p>
+            <h2>Let's find the right starting point</h2>
+            <p>Book an assessment and we'll guide you from there.</p>
+        </div>
+        <div class="cta-band__actions">
+            <a class="btn btn--gold" href="{% url 'clinic:book' %}">Book Appointment</a>
+            <a class="btn btn--outline-light" href="{% url 'clinic:contact' %}">Ask a question</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

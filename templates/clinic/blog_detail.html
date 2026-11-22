@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }} — {{ site.clinic_name }}{% endblock %}
+{% block meta_description %}{{ post.excerpt|default:post.content|truncatewords:28 }}{% endblock %}
+{% block body_class %}light-top{% endblock %}
+
+{% block content %}
+<article class="article">
+    <div class="container article__head">
+        <p class="eyebrow eyebrow--gold" data-reveal>Journal</p>
+        <h1 data-reveal data-delay="1">{{ post.title }}</h1>
+        <div class="article__meta" data-reveal data-delay="2">
+            <span>By {{ post.author }}</span>
+            <span class="article__meta-dot"></span>
+            <span>{{ post.published_at|date:"F j, Y" }}</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="article__cover" data-reveal data-delay="2">
+            {% if post.cover_image %}
+            <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" loading="lazy">
+            {% else %}
+            <img src="{% static 'img/blog-1.jpg' %}" alt="{{ post.title }}" loading="lazy">
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container article__layout">
+        <div class="article__body prose" data-reveal>
+            {{ post.content|linebreaks }}
+            {% if post.tag_list %}
+            <div class="article__tags">
+                {% for tag in post.tag_list %}<span class="tag">{{ tag }}</span>{% endfor %}
+            </div>
+            {% endif %}
+            <div class="article__share">
+                <span>Share this article</span>
+                <a href="https://wa.me/?text={{ post.title|urlencode }}" target="_blank" rel="noopener" aria-label="Share on WhatsApp">WhatsApp</a>
+                <a href="mailto:?subject={{ post.title|urlencode }}" aria-label="Share by email">Email</a>
+            </div>
+        </div>
+
+        <aside class="article__aside">
+            <div class="article__author-card" data-reveal data-delay="1">
+                {% if doctor.photo %}
+                <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}">
+                {% else %}
+                <img src="{% static 'img/doctor.jpg' %}" alt="{{ doctor.name }}">
+                {% endif %}
+                <h3>{{ doctor.name }}</h3>
+                <p>{{ doctor.title }}</p>
+                <a class="link-arrow link-arrow--sm" href="{% url 'clinic:about' %}">About the author
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+            </div>
+            <div class="article__book-card" data-reveal data-delay="2">
+                <h3>Ready to move better?</h3>
+                <p>Book a personalised assessment with Dr. Osama.</p>
+                <a class="btn btn--gold btn--block" href="{% url 'clinic:book' %}">Book Appointment</a>
+            </div>
+        </aside>
+    </div>
+</article>
+
+{% if recent %}
+<section class="section section--white">
+    <div class="container">
+        <div class="section-head">
+            <div>
+                <p class="eyebrow">Keep reading</p>
+                <h2>More from the journal</h2>
+            </div>
+            <a class="link-arrow" href="{% url 'clinic:blog' %}">All articles
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+        </div>
+        <div class="post-grid">
+            {% for item in recent %}
+            <article class="post-card" data-reveal data-delay="{{ forloop.counter0 }}">
+                <a class="post-card__media" href="{{ item.get_absolute_url }}">
+                    {% if item.cover_image %}
+                    <img src="{{ item.cover_image.url }}" alt="{{ item.title }}" loading="lazy">
+                    {% else %}
+                    <img src="{% static 'img/blog-' %}{% cycle '1' '2' '3' '4' %}.jpg" alt="{{ item.title }}" loading="lazy">
+                    {% endif %}
+                </a>
+                <div class="post-card__body">
+                    <span class="post-card__date">{{ item.published_at|date:"M j, Y" }}</span>
+                    <h3><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h3>
+                    <p>{{ item.excerpt|default:item.content|truncatewords:18 }}</p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

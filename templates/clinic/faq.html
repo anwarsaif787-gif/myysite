@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Frequently Asked Questions — {{ site.clinic_name }}{% endblock %}
+
+{% block content %}
+{% include 'includes/page_header.html' with eyebrow="FAQ" title="Answers before your first visit" subtitle="Everything you might be wondering about physiotherapy, booking, and what to expect." %}
+
+<section class="section section--cream">
+    <div class="container faq-split faq-split--wide">
+        <div class="faq-split__intro" data-reveal>
+            <p class="eyebrow">Good to know</p>
+            <h2>Questions, answered</h2>
+            <p>If you don't find what you're looking for, our team is only a message away.</p>
+            <div class="faq-split__card">
+                <span class="faq-split__card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.5 8.5 0 0 1-3.7-.9L3 20.5l1.5-4.6A8.4 8.4 0 1 1 21 11.5Z"/></svg>
+                </span>
+                <div>
+                    <span>Still have a question?</span>
+                    <a href="{% url 'clinic:contact' %}">Send us a message</a>
+                </div>
+            </div>
+            <a class="btn btn--navy" href="{% url 'clinic:book' %}">Book Appointment</a>
+        </div>
+        <div class="accordion accordion--large" data-accordion data-reveal data-delay="1">
+            {% for faq in faqs %}
+            <div class="accordion__item">
+                <button type="button" class="accordion__trigger" aria-expanded="false">
+                    <span>{{ faq.question }}</span>
+                    <span class="accordion__icon" aria-hidden="true"></span>
+                </button>
+                <div class="accordion__panel"><p>{{ faq.answer }}</p></div>
+            </div>
+            {% empty %}
+            <p class="empty-note">FAQs are being added. Please contact us with your questions.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="cta-band">
+    <div class="container cta-band__inner" data-reveal>
+        <div class="cta-band__copy">
+            <p class="eyebrow eyebrow--gold">Still deciding?</p>
+            <h2>Talk to us — no pressure</h2>
+            <p>Ask anything about your condition or how physiotherapy can help.</p>
+        </div>
+        <div class="cta-band__actions">
+            <a class="btn btn--gold" href="{% url 'clinic:contact' %}">Contact Us</a>
+            <a class="btn btn--outline-light" href="tel:{{ site.phone }}">{{ site.phone }}</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Patient Testimonials — {{ site.clinic_name }}{% endblock %}
+
+{% block content %}
+{% include 'includes/page_header.html' with eyebrow="Testimonials" title="Stories of recovery and renewed confidence" subtitle="Every patient's journey is different. These are a few of the people who trusted us with theirs." %}
+
+<section class="section section--cream">
+    <div class="container">
+        <div class="stats__grid stats__grid--compact">
+            <div class="stat" data-reveal>
+                <span class="stat__num" data-counter="{{ site.patients_treated }}">0</span>
+                <span class="stat__label">Patients helped</span>
+            </div>
+            <div class="stat" data-reveal data-delay="1">
+                <span class="stat__num" data-counter="{{ site.success_rate }}" data-suffix="%">0</span>
+                <span class="stat__label">Reported success</span>
+            </div>
+            <div class="stat" data-reveal data-delay="2">
+                <span class="stat__num" data-counter="{{ site.years_experience }}">0</span>
+                <span class="stat__label">Years of experience</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section--white">
+    <div class="container">
+        <div class="testimonial-grid">
+            {% for testimonial in testimonials %}
+            <article class="testimonial-card testimonial-card--tall" data-reveal data-delay="{{ forloop.counter0 }}">
+                <span class="stars" aria-label="{{ testimonial.rating }} out of 5 stars">
+                    {% for star in "12345"|make_list %}{% if forloop.counter <= testimonial.rating %}★{% else %}☆{% endif %}{% endfor %}
+                </span>
+                <blockquote>“{{ testimonial.quote }}”</blockquote>
+                <div class="testimonial-card__person">
+                    <span class="avatar">{{ testimonial.patient_name|first }}</span>
+                    <div>
+                        <strong>{{ testimonial.patient_name }}</strong>
+                        <span>{{ testimonial.service.name|default:"Physiotherapy patient" }}</span>
+                    </div>
+                </div>
+            </article>
+            {% empty %}
+            <p class="empty-note">Patient stories will appear here soon.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="cta-band">
+    <div class="container cta-band__inner" data-reveal>
+        <div class="cta-band__copy">
+            <p class="eyebrow eyebrow--gold">Your story next</p>
+            <h2>Let's write your recovery story</h2>
+            <p>Book an assessment and take the first step towards lasting relief.</p>
+        </div>
+        <div class="cta-band__actions">
+            <a class="btn btn--gold" href="{% url 'clinic:book' %}">Book Appointment</a>
+            <a class="btn btn--outline-light" href="tel:{{ site.phone }}">{{ site.phone }}</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

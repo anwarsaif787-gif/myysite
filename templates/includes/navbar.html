@@ -1,0 +1,29 @@
+{% load static %}
+<header class="site-header" id="siteHeader">
+    <div class="container header__inner">
+        <a class="brand" href="{% url 'clinic:home' %}" aria-label="{{ site.clinic_name }} home">
+            <span class="brand__mark">SP</span>
+            <span class="brand__text">
+                <span class="brand__name">Sami Physiotherapy</span>
+                <span class="brand__sub">&amp; Rehab. Center</span>
+            </span>
+        </a>
+
+        <nav class="nav" id="primaryNav" aria-label="Primary">
+            <a class="nav__link {% if request.resolver_match.url_name == 'home' %}is-active{% endif %}" href="{% url 'clinic:home' %}">Home</a>
+            <a class="nav__link {% if request.resolver_match.url_name == 'about' %}is-active{% endif %}" href="{% url 'clinic:about' %}">About</a>
+            <a class="nav__link {% if request.resolver_match.url_name == 'services' or request.resolver_match.url_name == 'service_detail' %}is-active{% endif %}" href="{% url 'clinic:services' %}">Services</a>
+            <a class="nav__link {% if request.resolver_match.url_name == 'gallery' %}is-active{% endif %}" href="{% url 'clinic:gallery' %}">Gallery</a>
+            <a class="nav__link {% if request.resolver_match.url_name == 'blog' or request.resolver_match.url_name == 'blog_detail' %}is-active{% endif %}" href="{% url 'clinic:blog' %}">Journal</a>
+            <a class="nav__link {% if request.resolver_match.url_name == 'contact' %}is-active{% endif %}" href="{% url 'clinic:contact' %}">Contact</a>
+            <a class="btn btn--gold nav__cta" href="{% url 'clinic:book' %}">Book Appointment</a>
+        </nav>
+
+        <a class="btn btn--gold header__cta" href="{% url 'clinic:book' %}">Book Appointment</a>
+
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primaryNav">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+    <div class="nav-backdrop" id="navBackdrop"></div>
+</header>

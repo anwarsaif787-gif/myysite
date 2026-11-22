@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Appointment Requested — {{ site.clinic_name }}{% endblock %}
+{% block body_class %}light-top{% endblock %}
+
+{% block content %}
+<section class="section section--cream success-section">
+    <div class="container">
+        <div class="success-card" data-reveal>
+            <span class="success-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg>
+            </span>
+            <p class="eyebrow">Request received</p>
+            <h1>Your appointment is requested</h1>
+            <p class="success-card__lead">Thank you{% if appointment %}, {{ appointment.name }}{% endif %}! We've received your request and will confirm it by phone or email within one working day.</p>
+
+            {% if appointment %}
+            <div class="success-card__summary">
+                <div><span>Service</span><strong>{{ appointment.service.name|default:"General Assessment" }}</strong></div>
+                <div><span>Date</span><strong>{{ appointment.date|date:"l, F j, Y" }}</strong></div>
+                <div><span>Time</span><strong>{{ appointment.time|time:"g:i A" }}</strong></div>
+                <div><span>Status</span><strong class="status-pill">Pending confirmation</strong></div>
+            </div>
+            {% endif %}
+
+            <div class="success-card__next">
+                <h3>What happens next?</h3>
+                <ol class="success-steps">
+                    <li><span>1</span>Our team reviews your request and confirms availability.</li>
+                    <li><span>2</span>You'll receive a confirmation call or email.</li>
+                    <li><span>3</span>Arrive 10 minutes early on the day — we'll take care of the rest.</li>
+                </ol>
+            </div>
+
+            <div class="success-card__actions">
+                <a class="btn btn--navy" href="{% url 'clinic:home' %}">Back to Home</a>
+                <a class="btn btn--ghost" href="tel:{{ site.phone }}">Call {{ site.phone }}</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

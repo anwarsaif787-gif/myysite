@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Physiotherapy Journal — {{ site.clinic_name }}{% endblock %}
+
+{% block content %}
+{% include 'includes/page_header.html' with eyebrow="Journal" title="Practical insights for a stronger body" subtitle="Evidence-based advice on movement, recovery, and staying pain-free — written for real life." %}
+
+<section class="section section--cream">
+    <div class="container">
+        <div class="post-grid post-grid--full">
+            {% for post in posts %}
+            <article class="post-card" data-reveal data-delay="{{ forloop.counter0 }}">
+                <a class="post-card__media" href="{{ post.get_absolute_url }}">
+                    {% if post.cover_image %}
+                    <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" loading="lazy">
+                    {% else %}
+                    <img src="{% static 'img/blog-' %}{% cycle '1' '2' '3' '4' %}.jpg" alt="{{ post.title }}" loading="lazy">
+                    {% endif %}
+                    {% if forloop.first %}<span class="post-card__badge">Latest</span>{% endif %}
+                </a>
+                <div class="post-card__body">
+                    <span class="post-card__date">{{ post.published_at|date:"M j, Y" }}</span>
+                    <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                    <p>{{ post.excerpt|default:post.content|truncatewords:22 }}</p>
+                    <a class="link-arrow link-arrow--sm" href="{{ post.get_absolute_url }}">Read article
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </a>
+                </div>
+            </article>
+            {% empty %}
+            <p class="empty-note">Articles are on their way. Check back soon.</p>
+            {% endfor %}
+        </div>
+
+        {% if is_paginated %}
+        <nav class="pagination" aria-label="Pagination">
+            {% if page_obj.has_previous %}
+            <a class="pagination__link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+            <span class="pagination__current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+            <a class="pagination__link" href="?page={{ page_obj.next_page_number }}">Next</a>
+            {% endif %}
+        </nav>
+        {% endif %}
+    </div>
+</section>
+
+<section class="cta-band">
+    <div class="container cta-band__inner" data-reveal>
+        <div class="cta-band__copy">
+            <p class="eyebrow eyebrow--gold">Need personal guidance?</p>
+            <h2>Advice is helpful — assessment is better</h2>
+            <p>Book a consultation for a plan tailored to your body.</p>
+        </div>
+        <div class="cta-band__actions">
+            <a class="btn btn--gold" href="{% url 'clinic:book' %}">Book Appointment</a>
+            <a class="btn btn--outline-light" href="{% url 'clinic:contact' %}">Ask a question</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

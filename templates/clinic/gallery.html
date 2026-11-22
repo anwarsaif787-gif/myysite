@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Clinic Gallery — {{ site.clinic_name }}{% endblock %}
+
+{% block content %}
+{% include 'includes/page_header.html' with eyebrow="Gallery" title="Inside the clinic" subtitle="A calm, modern, and fully equipped space designed to make every session comfortable." %}
+
+<section class="section section--cream">
+    <div class="container">
+        {% if categories %}
+        <div class="filter-bar" data-gallery-filters>
+            <button type="button" class="filter-btn is-active" data-filter="all">All</button>
+            {% for category in categories %}
+            <button type="button" class="filter-btn" data-filter="{{ category }}">{{ category }}</button>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="gallery-grid gallery-grid--full" data-gallery>
+            {% for image in images %}
+            <a class="gallery-item" href="{{ image.image.url }}" data-lightbox data-caption="{{ image.title }}" data-category="{{ image.category }}" data-reveal data-delay="{{ forloop.counter0 }}">
+                <img src="{{ image.image.url }}" alt="{{ image.title|default:'Clinic gallery image' }}" loading="lazy">
+                <span class="gallery-item__overlay"><span>{{ image.title|default:"View" }}</span></span>
+            </a>
+            {% empty %}
+            {% for n in "123456789"|make_list %}
+            <a class="gallery-item" href="{% static 'img/gallery-' %}{{ n }}.jpg" data-lightbox data-caption="{{ site.clinic_name }} clinic" data-category="Clinic" data-reveal data-delay="{{ forloop.counter0 }}">
+                <img src="{% static 'img/gallery-' %}{{ n }}.jpg" alt="{{ site.clinic_name }} clinic" loading="lazy">
+                <span class="gallery-item__overlay"><span>View</span></span>
+            </a>
+            {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="cta-band">
+    <div class="container cta-band__inner" data-reveal>
+        <div class="cta-band__copy">
+            <p class="eyebrow eyebrow--gold">Visit us</p>
+            <h2>Come see the space for yourself</h2>
+            <p>Book a visit and experience care in a setting built for recovery.</p>
+        </div>
+        <div class="cta-band__actions">
+            <a class="btn btn--gold" href="{% url 'clinic:book' %}">Book Appointment</a>
+            <a class="btn btn--outline-light" href="{% url 'clinic:contact' %}">Get directions</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
