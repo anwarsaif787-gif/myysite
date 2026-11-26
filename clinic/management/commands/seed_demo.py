@@ -230,19 +230,24 @@ class Command(BaseCommand):
         site.clinic_name = "Sami Physiotherapy & Rehab. Center"
         site.doctor_name = "Dr. Osama Sami"
         site.tagline = "Movement restored. Life reclaimed."
-        site.phone = "+91 98520 60649"
+        site.phone = "+91 9852060649"
         site.whatsapp = "919852060649"
         site.email = "samiphysio1992@gmail.com"
-        site.address = "Gaushala Rd, Doctors Colony, Siwan, Bihar 841227, India"
+        site.address = (
+            "Gaushala Rd, Doctors Colony, Hardia Village, Takiya, "
+            "Gosain Chhapra, Siwan, Bihar, India"
+        )
         site.location_short = "Siwan, Bihar"
-        site.directions_url = "https://maps.app.goo.gl/9h8JbgSBrXt8K8qC7?g_st=aw"
+        site.directions_url = "https://maps.app.goo.gl/ztoSxfQY5BU6YeLV7?g_st=aw"
         site.map_embed_url = (
-            "https://www.google.com/maps?q=Gaushala+Rd,+Doctors+Colony,"
-            "+Siwan,+Bihar+841227&z=16&output=embed"
+            "https://www.google.com/maps?q=Sami+Physiotherapy+%26+Rehab.+Center,"
+            "+Gaushala+Rd,+Doctors+Colony,+Siwan,+Bihar+841227&z=16&output=embed"
         )
         site.working_hours = "Mon – Thu & Sat – Sun: 9:00 AM – 5:00 PM"
         site.facebook = ""
-        site.instagram = "https://www.instagram.com/osamasami2511/"
+        site.instagram = (
+            "https://www.instagram.com/osamasami2511?jplx=MTd3Mnl5cngzOThkag=="
+        )
         site.linkedin = ""
         site.youtube = ""
         site.hero_heading = "Expert Physiotherapy for a Stronger, Pain\u2011Free Life"

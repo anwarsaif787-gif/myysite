@@ -43,10 +43,6 @@
                     <li><span>Duration</span><strong>{{ service.duration_minutes }} minutes</strong></li>
                     <li><span>Format</span><strong>One-to-one</strong></li>
                     <li><span>Location</span><strong>In-clinic</strong></li>
-                    <li>
-                        <span>Session fee</span>
-                        <strong>{% if service.price %}EGP {{ service.price|floatformat:0 }}{% else %}On request{% endif %}</strong>
-                    </li>
                 </ul>
                 <a class="btn btn--gold btn--block" href="{% url 'clinic:book' %}?service={{ service.pk }}">Book this service</a>
                 <a class="detail-card__phone" href="tel:{{ site.phone }}">

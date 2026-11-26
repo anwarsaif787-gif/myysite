@@ -21,7 +21,7 @@ class AppointmentForm(forms.ModelForm):
             "message": forms.Textarea(attrs={"rows": 3, "placeholder": "Anything we should know?"}),
             "name": forms.TextInput(attrs={"placeholder": "Your full name"}),
             "email": forms.EmailInput(attrs={"placeholder": "you@example.com"}),
-            "phone": forms.TextInput(attrs={"placeholder": "+91 98520 60649"}),
+            "phone": forms.TextInput(attrs={"placeholder": "+91 9852060649"}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -69,7 +69,7 @@ class ContactForm(forms.ModelForm):
         widgets = {
             "name": forms.TextInput(attrs={"placeholder": "Your full name"}),
             "email": forms.EmailInput(attrs={"placeholder": "you@example.com"}),
-            "phone": forms.TextInput(attrs={"placeholder": "+91 98520 60649"}),
+            "phone": forms.TextInput(attrs={"placeholder": "+91 9852060649"}),
             "subject": forms.TextInput(attrs={"placeholder": "How can we help?"}),
             "message": forms.Textarea(attrs={"rows": 5, "placeholder": "Tell us a little about your case"}),
         }

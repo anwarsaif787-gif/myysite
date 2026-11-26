@@ -21,27 +21,28 @@ class SingletonModel(models.Model):
 
 class SiteSettings(SingletonModel):
     clinic_name = models.CharField(
-        max_length=120, default="Sami Physiotherapy & Rehab. Center"
+        max_length=120, default="Sami Physiotherapy"
     )
     doctor_name = models.CharField(max_length=120, default="Dr. Osama Sami")
     tagline = models.CharField(
         max_length=200, default="Movement restored. Life reclaimed."
     )
-    phone = models.CharField(max_length=40, blank=True, default="+91 98520 60649")
+    phone = models.CharField(max_length=40, blank=True, default="+91 9852060649")
     whatsapp = models.CharField(max_length=40, blank=True, default="919852060649")
     email = models.EmailField(blank=True, default="samiphysio1992@gmail.com")
     address = models.CharField(
         max_length=255,
         blank=True,
-        default="Gaushala Rd, Doctors Colony, Siwan, Bihar 841227, India",
+        default="Gaushala Rd, Doctors Colony, Hardia Village, Takiya, Gosain Chhapra, Siwan, Bihar, India",
     )
     location_short = models.CharField(max_length=120, blank=True, default="Siwan, Bihar")
     directions_url = models.URLField(
-        blank=True, default="https://maps.app.goo.gl/9h8JbgSBrXt8K8qC7?g_st=aw"
+        blank=True,
+        default="https://maps.app.goo.gl/ztoSxfQY5BU6YeLV7?g_st=aw",
     )
     map_embed_url = models.URLField(
         blank=True,
-        default="https://www.google.com/maps?q=Gaushala+Rd,+Doctors+Colony,+Siwan,+Bihar+841227&z=16&output=embed",
+        default="https://www.google.com/maps?q=Sami+Physiotherapy+%26+Rehab.+Center,+Gaushala+Rd,+Doctors+Colony,+Siwan,+Bihar+841227&z=16&output=embed",
     )
     working_hours = models.CharField(
         max_length=200,
@@ -50,7 +51,8 @@ class SiteSettings(SingletonModel):
     )
     facebook = models.URLField(blank=True)
     instagram = models.URLField(
-        blank=True, default="https://www.instagram.com/osamasami2511/"
+        blank=True,
+        default="https://www.instagram.com/osamasami2511?jplx=MTd3Mnl5cngzOThkag==",
     )
     linkedin = models.URLField(blank=True)
     youtube = models.URLField(blank=True)
