@@ -1,9 +1,3 @@
-databases:
-  - name: myysite-db
-    plan: free
-    databaseName: myysite
-    user: myysite
-
 services:
   - type: web
     name: myysite
@@ -12,10 +6,6 @@ services:
     buildCommand: bash build.sh
     startCommand: gunicorn myysite.wsgi:application
     envVars:
-      - key: DATABASE_URL
-        fromDatabase:
-          name: myysite-db
-          property: connectionString
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
