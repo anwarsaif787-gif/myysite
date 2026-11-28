@@ -83,7 +83,8 @@
                     {% if item.cover_image %}
                     <img src="{{ item.cover_image.url }}" alt="{{ item.title }}" loading="lazy">
                     {% else %}
-                    <img src="{% static 'img/blog-' %}{% cycle '1' '2' '3' '4' %}.jpg" alt="{{ item.title }}" loading="lazy">
+                    {% cycle 'img/blog-1.jpg' 'img/blog-2.jpg' 'img/blog-3.jpg' 'img/blog-4.jpg' as blog_path %}
+                    <img src="{% static blog_path %}" alt="{{ item.title }}" loading="lazy">
                     {% endif %}
                 </a>
                 <div class="post-card__body">

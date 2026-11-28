@@ -243,10 +243,12 @@
             </a>
             {% empty %}
             {% for n in "123456" %}
-            <a class="gallery-item" href="{% static 'img/gallery-' %}{{ n }}.jpg" data-lightbox data-caption="{{ site.clinic_name }} clinic" data-reveal data-delay="{{ forloop.counter0 }}">
-                <img src="{% static 'img/gallery-' %}{{ n }}.jpg" alt="{{ site.clinic_name }} clinic" loading="lazy">
+            {% with 'img/gallery-'|add:n|add:'.jpg' as gallery_path %}
+            <a class="gallery-item" href="{% static gallery_path %}" data-lightbox data-caption="{{ site.clinic_name }} clinic" data-reveal data-delay="{{ forloop.counter0 }}">
+                <img src="{% static gallery_path %}" alt="{{ site.clinic_name }} clinic" loading="lazy">
                 <span class="gallery-item__overlay"><span>View</span></span>
             </a>
+            {% endwith %}
             {% endfor %}
             {% endfor %}
         </div>
@@ -271,7 +273,8 @@
                     {% if post.cover_image %}
                     <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" loading="lazy">
                     {% else %}
-                    <img src="{% static 'img/blog-' %}{% cycle '1' '2' '3' '4' %}.jpg" alt="{{ post.title }}" loading="lazy">
+                    {% cycle 'img/blog-1.jpg' 'img/blog-2.jpg' 'img/blog-3.jpg' 'img/blog-4.jpg' as blog_path %}
+                    <img src="{% static blog_path %}" alt="{{ post.title }}" loading="lazy">
                     {% endif %}
                 </a>
                 <div class="post-card__body">
